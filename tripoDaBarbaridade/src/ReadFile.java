@@ -20,7 +20,6 @@ public class ReadFile {
         Path path2 = Paths.get(nameComplete);
         Boolean semPaizao = true;
         int terrasPapaizao = 0;
-        String nomedoPaizao = "mama";
         try (Scanner sc = new Scanner(Files.newBufferedReader(path2, Charset.defaultCharset()))){
               
             while(sc.hasNextLine()) {
@@ -34,7 +33,6 @@ public class ReadFile {
                         basic.add(tokens[0], tokens[0], terrasPapaizao);
                         basic.add(tokens[0], tokens[1], Integer.parseInt(tokens[2]));
                         semPaizao = false;
-                        nomedoPaizao = tokens[0];
                     }
                     else{
                         basic.add(tokens[0], tokens[1], Integer.parseInt(tokens[2]));

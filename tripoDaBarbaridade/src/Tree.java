@@ -217,16 +217,6 @@ public class Tree {
             this.nElements=0;
         }
     
-        //retorna uma lista com todos os elementos da árvore na ordem pré-fixada
-        public int [] positionsPre(){
-            return null;
-        }
-        
-        //retorna uma lista com todos os elementos da árvore na ordem pos-fixada
-        public int [] positionsPos(){
-            return null;
-        }
-    
         //retorna uma lista com todos os elementos da árvore com um caminhamento em largura
         public String [] positionsWidth(){
             if(nElements==0)
