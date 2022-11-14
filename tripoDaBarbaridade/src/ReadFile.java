@@ -38,6 +38,11 @@ public class ReadFile {
                         basic.add(tokens[0], tokens[1], Integer.parseInt(tokens[2]));
                     }
                 }
+                for(int i = 0; i < tokens.length; i++){
+                    System.out.print(tokens[i]);
+                    System.out.print(",");
+                }
+                System.out.println();
             }
 
         }catch (IOException x){

@@ -7,9 +7,9 @@ public class App {
 
         arquivo.loadProgram("triboViking.txt");
 
-        arquivo.passaHeranca();
+        //arquivo.passaHeranca();
 
-        arquivo.imprime();
+        //arquivo.imprime();
 
     }
 }
