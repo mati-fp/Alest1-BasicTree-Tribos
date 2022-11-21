@@ -31,11 +31,14 @@ public class ReadFile {
                 else {
                     if( semPaizao ){
                         basic.add(tokens[0], tokens[0], terrasPapaizao);
+                        System.out.println("Ancestral de Origem: "+tokens[0]+" -- Terras: "+terrasPapaizao);
                         basic.add(tokens[0], tokens[1], Integer.parseInt(tokens[2]));
+                        System.out.println("Pai: "+tokens[0]+" -- Filho: "+tokens[1]+" -- Terras do filho antes de herdar: "+tokens[2]);
                         semPaizao = false;
                     }
                     else{
                         basic.add(tokens[0], tokens[1], Integer.parseInt(tokens[2]));
+                        System.out.println("Pai: "+tokens[0]+" -- Filho: "+tokens[1]+" -- Terras do filho antes de herdar: "+tokens[2]);
                     }
                 }
             }
@@ -57,6 +60,7 @@ public class ReadFile {
 
     public void imprime(){
         basic.doTheString();
+        System.out.println(basic.size());
     }
 
 }

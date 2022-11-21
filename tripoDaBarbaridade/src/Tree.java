@@ -7,6 +7,7 @@ public class Tree {
         private TreeNode [] children;
         private int nChild;
         public int terras;
+        public int nLinhagem;
 
         public TreeNode (String guerreiro, Integer element){
             father=null;
@@ -21,12 +22,19 @@ public class Tree {
             children[nChild] = n;
             n.father=this;
             nChild++;
+            n.nLinhagem = this.nLinhagem + 1;
         }
         private void grow(){
             TreeNode aux [] = new TreeNode[children.length*2];
             for(int i=0; i<children.length; i++)
               aux[i]=children[i];
             children=aux;            
+        }
+        public boolean comparaNome(String nome){
+            if (nome == this.nome)
+                return true;
+
+            return false;
         }
         public boolean removeSubtree(TreeNode n){
             if(n==null)
@@ -77,14 +85,15 @@ public class Tree {
         private TreeNode searchNode(String value, TreeNode ref){
 
             if(ref!=null){
-                if(ref.nome==value)
+                if(ref.nome.equals(value))
                     return ref;
                 else{
                     TreeNode aux=null;
                     for(int i=0; i<ref.getSubtreeSize(); i++){
                         aux=searchNode(value, ref.getSubtree(i));
-                        if(aux != null)
+                        if(aux != null){
                             return aux;
+                        }
                     }
                     return null;
                 }
@@ -101,6 +110,7 @@ public class Tree {
             TreeNode aux;
             if(nElements==0){
                 this.root=new TreeNode(son, terras);
+                root.nLinhagem = 1;
             }
             else{
                 aux = searchNode(father, root);
@@ -108,6 +118,7 @@ public class Tree {
                     return false;
                 else
                     aux.addSubtree(new TreeNode(son, terras));
+                    
             }
             nElements++;
     
@@ -122,6 +133,7 @@ public class Tree {
 
         public boolean herancaDoPapai(TreeNode VeioDaLancha){
             
+            TreeNode descendenteMaisRico;
             TreeNode filhoSortudo;
             int herancaPaizao = (VeioDaLancha.terras)/VeioDaLancha.getSubtreeSize();
             for (int i =0; i < VeioDaLancha.getSubtreeSize(); i++){
@@ -129,9 +141,20 @@ public class Tree {
                 filhoSortudo.terras += herancaPaizao;
                 if (filhoSortudo.getSubtreeSize() > 0)
                     herancaDoPapai(filhoSortudo);
+                
+                
             }
 
             return true;
+        }
+
+        public void printCasoTeste(){
+
+        }
+
+        public void printDescententeRicasso(){
+
+
         }
     
         //retorna o elemento armazenado na raiz
