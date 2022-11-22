@@ -8,6 +8,8 @@ public class Tree {
         private int nChild;
         public int terras;
         public int nLinhagem;
+        public String espacos = "";
+        public int heranca;
 
         public TreeNode (String guerreiro, Integer element){
             father=null;
@@ -23,6 +25,7 @@ public class Tree {
             n.father=this;
             nChild++;
             n.nLinhagem = this.nLinhagem + 1;
+            n.espacos = this.espacos + " ";
         }
         private void grow(){
             TreeNode aux [] = new TreeNode[children.length*2];
@@ -30,12 +33,14 @@ public class Tree {
               aux[i]=children[i];
             children=aux;            
         }
-        public boolean comparaNome(String nome){
-            if (nome == this.nome)
-                return true;
-
-            return false;
+        public void passaHenanca(){
+            heranca = terras/nChild;
+            for (int i= 0; i < nChild; i++){
+                children[i].terras += heranca;
+            }
+            terras = 0;
         }
+
         public boolean removeSubtree(TreeNode n){
             if(n==null)
                 return false;
@@ -72,14 +77,15 @@ public class Tree {
 
 
     //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-    // ATRIBUTOS E MÉTODOS DA ÁRVORE
-    private TreeNode root;
-    private int nElements;
+        // ATRIBUTOS E MÉTODOS DA ÁRVORE
+        private TreeNode root;
+        private int nElements;
+        private TreeNode descendenteMaisRico;
 
-    public Tree(){
-        this.root=null;
-        this.nElements=0;
-    }
+        public Tree(){
+            this.root=null;
+            this.nElements=0;
+        }
 
         // método privado elaborado na versão 0.2
         private TreeNode searchNode(String value, TreeNode ref){
@@ -104,12 +110,12 @@ public class Tree {
         }
     
         //insere o elemento e como filho de father
-        // Versao 0.1 -> Inclui root e inclui filho de root
         // Versao 0.2 -> Permite a inclusão de mais níveis na árvore
         public boolean add(String father, String son, Integer terras){
             TreeNode aux;
             if(nElements==0){
                 this.root=new TreeNode(son, terras);
+                descendenteMaisRico = root;
                 root.nLinhagem = 1;
             }
             else{
@@ -132,106 +138,17 @@ public class Tree {
         }
 
         public boolean herancaDoPapai(TreeNode VeioDaLancha){
-            
-            TreeNode descendenteMaisRico;
-            TreeNode filhoSortudo;
-            int herancaPaizao = (VeioDaLancha.terras)/VeioDaLancha.getSubtreeSize();
-            for (int i =0; i < VeioDaLancha.getSubtreeSize(); i++){
-                filhoSortudo = VeioDaLancha.getSubtree(i);
-                filhoSortudo.terras += herancaPaizao;
-                if (filhoSortudo.getSubtreeSize() > 0)
-                    herancaDoPapai(filhoSortudo);
-                
-                
+
+            if (VeioDaLancha.getSubtreeSize() > 0){
+                for (int i =0; i < VeioDaLancha.getSubtreeSize(); i++){
+                    VeioDaLancha.passaHenanca();
+                    if (VeioDaLancha.getSubtree(i).getSubtreeSize() > 0)
+                        herancaDoPapai(VeioDaLancha.getSubtree(i));
+                }
             }
-
-            return true;
-        }
-
-        public void printCasoTeste(){
-
-        }
-
-        public void printDescententeRicasso(){
-
-
-        }
-    
-        //retorna o elemento armazenado na raiz
-        public String getRoot(){
-            if(root!=null)
-                return root.nome;
-            return null;
-        }
-    
-        //altera o elemento armazenado na raiz
-        public void setRoot(String e){
-            if((e!=null) && (root!=null)){
-                root.nome=e;
-            }        
-        }
-    
-        //retorna o pai do elemento e
-        public String getParent(String e){
-            TreeNode aux=searchNode(e, this.root);
-            if((aux!=null)&&(aux.father!=null))
-                return aux.father.nome;
-            return null;
-        }
-    
-        //remove o elemento e e seus filhos
-        public boolean removeBranch(String e){
-            TreeNode aux = searchNode(e, root);
-            if(aux == null)
-                return false;
-    
-            if(aux == this.root)
-                clear();
-            else{
-                aux.father.removeSubtree(aux);
-                // ATUALIZAR O NELEMENTS (BOA SORTE!!!)
-            }
-    
             return true;
         }
     
-        //retorna true se a árvore contém o elemento e    
-        public boolean contains(String e){
-            return (searchNode(e, this.root)!=null);
-        }
-    
-        //retorna true se o elemento está armazenado em um nodo interno
-        public boolean isInternal(String e){
-            TreeNode aux = searchNode(e, this.root);
-            if((aux!=null)&&(aux.getSubtreeSize()>0))
-                return true;
-            return false;
-        }
-    
-        //retorna true se o elemento está armazenado em um nodo externo
-        public boolean isExternal(String e){
-            TreeNode aux = searchNode(e, this.root);
-            if((aux!=null)&&(aux.getSubtreeSize()==0))
-                return true;
-            return false;
-        }
-    
-        //retorna true se o elemento e está armazenado na raiz
-        public boolean isRoot(String e){
-            if((root!=null)&&(e!=null)&&(root.nome==e))
-                return true;
-            return false;
-        }
-    
-        //retorna true se a árvore está vazia    
-        public boolean isEmpty(){
-            return (nElements==0);
-        }
-    
-        //retorna o número de elementos armazenados na árvore
-        public int size(){
-            return nElements;
-        }
         //remove todos os elementos da árvore
         public void clear(){
             //requer navegação
@@ -240,33 +157,61 @@ public class Tree {
             this.nElements=0;
         }
     
-        //retorna uma lista com todos os elementos da árvore com um caminhamento em largura
-        public String [] positionsWidth(){
-            if(nElements==0)
-                return null;
-            
-            String [] lista = new String[this.nElements];
-            int idx=0;
-            int pos=0;
-    
-            lista[idx++]=root.nome;
-            while(idx<nElements){
-                TreeNode aux = searchNode(lista[pos++], this.root);
-                if(aux!=null)
-                    for(int i=0; i<aux.getSubtreeSize(); i++)
-                        lista[idx++]=aux.getSubtree(i).nome;
-            }
-    
-            return lista;
-    
-        }
     
         public void doTheString(){
     
-            printValue(root);
+            printValueResult(root, root);
     
         }
     
+        private void printValueResult(TreeNode ref, TreeNode refEspaços){
+    
+            if(ref!=null){
+                if (ref.nome.equals(refEspaços.nome))
+                    System.out.print(ref.nome+" Filhos: ");
+                else {
+                    System.out.print(ref.espacos+ref.nome+" Filhos: ");
+                }
+                System.out.print(" [ ");
+                for(int i=0; i<ref.getSubtreeSize(); i++){
+                    if (ref.getSubtreeSize() == 0)
+                        System.out.print(" ] ");
+                    printValueResult(ref.getSubtree(i), ref);
+                    
+                }
+                
+            }
+    
+        }
+
+        public void printDescentendeMaisRico(){
+            printDescentendeMaisRico(root);
+            System.out.println();
+            System.out.println("Descentende mais rico: "+descendenteMaisRico.nome+ " - Quantidade de Terras: "+descendenteMaisRico.terras);
+        }
+
+        private void printDescentendeMaisRico(TreeNode ref){
+
+            if (ref != null){
+                if (ref.getSubtreeSize() == 0){
+                    if (ref.nLinhagem > descendenteMaisRico.nLinhagem){
+                        descendenteMaisRico = ref;
+                    }
+                    else if (ref.nLinhagem == descendenteMaisRico.nLinhagem){
+                        if (ref.terras >= descendenteMaisRico.terras){
+                            descendenteMaisRico = ref;
+                        }
+                    }
+                }
+                for (int i = 0; i < ref.getSubtreeSize(); i++){
+                    printDescentendeMaisRico(ref.getSubtree(i));
+                }
+                
+            }
+
+        }
+
+        //metodo padrao da arvore original com inteiros
         private void printValue(TreeNode ref){
     
             if(ref!=null){

@@ -60,7 +60,7 @@ public class ReadFile {
 
     public void imprime(){
         basic.doTheString();
-        System.out.println(basic.size());
+        basic.printDescentendeMaisRico();
     }
 
 }
