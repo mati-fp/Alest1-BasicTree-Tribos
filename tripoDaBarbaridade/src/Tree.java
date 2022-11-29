@@ -41,27 +41,6 @@ public class Tree {
             terras = 0;
         }
 
-        public boolean removeSubtree(TreeNode n){
-            if(n==null)
-                return false;
-            
-            int idx=-1;
-            for(int i=0; i<nChild; i++)
-                if(children[i]==n){
-                    idx=i;
-                    break;
-                }
-            
-            if(idx==-1)
-                return false;
-
-            for(int i=idx; i<nChild; i++)
-                children[i]=children[i+1];
-            nChild--;
-            children[nChild]=null;
-            
-            return true;
-        }
         // busca subtree pelo indice dentro da lista de filhos
         public TreeNode getSubtree(int i){
             if(i>=0 && i<nChild)
@@ -160,7 +139,8 @@ public class Tree {
     
         public void doTheString(){
     
-            printValueResult(root, root);
+            //printValueResult(root, root);
+            //n tá funcionando direito essa merda
     
         }
     
@@ -210,17 +190,4 @@ public class Tree {
             }
 
         }
-
-        //metodo padrao da arvore original com inteiros
-        private void printValue(TreeNode ref){
-    
-            if(ref!=null){
-                System.out.print(ref.nome+"; ");
-                for(int i=0; i<ref.getSubtreeSize(); i++)
-                    printValue(ref.getSubtree(i));
-            }
-    
-        }
-
-
 }

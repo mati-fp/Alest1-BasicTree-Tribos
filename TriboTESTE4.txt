@@ -1,0 +1,8 @@
+1000
+Giovanni Vicente 100
+Giovanni Felipe 200
+Vicente Mateus 100
+Vicente Jose 100
+Vicente Pedro 100
+Mateus Claudio 90
+Mateus Paulo 50

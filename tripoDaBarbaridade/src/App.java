@@ -1,11 +1,13 @@
 public class App {
     public static void main(String[] args) throws Exception {
         
-        //Se for fazer alguma alteração amigo Giovani cria uma nova branch com o nome da alteração que será feita, e depois quando
-        //ta rolando merjea.
         ReadFile arquivo = new ReadFile();
 
-        arquivo.loadProgram("triboViking.txt");
+        arquivo.loadProgram("TriboEDSON.txt");
+        // arquivo.loadProgram("TriboTESTE1.txt");
+        // arquivo.loadProgram("TriboTESTE2.txt");
+        // arquivo.loadProgram("TriboTESTE3.txt");
+        //arquivo.loadProgram("TriboTESTE4.txt");
 
         arquivo.passaHeranca();
 

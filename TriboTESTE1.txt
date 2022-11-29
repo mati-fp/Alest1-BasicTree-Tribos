@@ -1,0 +1,11 @@
+5000
+Luigi Lucas 500
+Luigi Fuleco 200
+Luigi Victor 70
+Lucas Heitor 30
+Lucas Ramiro 50
+Lucas Fabio 2
+Fuleco Vinicius 50
+Fuleco Mauricio 400
+Heitor Patricio 10
+Vinicius Bernardo 30
